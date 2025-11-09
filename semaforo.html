@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Semáforo en JavaScript</title>
+  <style>
+    body {
+      background: #222;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      font-family: sans-serif;
+    }
+
+    .semaforo {
+      background: #333;
+      width: 100px;
+      padding: 20px;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .luz {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #111;
+      opacity: 0.3;
+      transition: opacity 0.5s;
+    }
+
+    .encendida {
+      opacity: 1;
+    }
+
+    #rojo.encendida { background: red; }
+    #amarillo.encendida { background: yellow; }
+    #verde.encendida { background: limegreen; }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      background-color: #444;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Simulación de Semáforo</h1>
+  <div class="semaforo">
+    <div id="rojo" class="luz"></div>
+    <div id="amarillo" class="luz"></div>
+    <div id="verde" class="luz"></div>
+  </div>
+  <button onclick="iniciarSemaforo()">Iniciar</button>
+
+  <script>
+    let luces = ['rojo', 'amarillo', 'verde'];
+    let indice = 0;
+    let intervalo;
+
+    function encenderLuz(color) {
+      luces.forEach(l => {
+        document.getElementById(l).classList.remove('encendida');
+      });
+      document.getElementById(color).classList.add('encendida');
+    }
+
+    function iniciarSemaforo() {
+      clearInterval(intervalo);
+      encenderLuz(luces[indice]);
+      intervalo = setInterval(() => {
+        indice = (indice + 1) % luces.length;
+        encenderLuz(luces[indice]);
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
